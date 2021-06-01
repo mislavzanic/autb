@@ -1,29 +1,29 @@
 from math import sqrt, floor
+from typing import List, Tuple
 
 
-def gcd(a, b):
+def gcd(a: int, b: int) -> int:
     a, b = max(a, b), min(a, b)
     while b > 0:
         a, b = b, a % b
     return a
 
 
-def get_all_semi_prime(n):
+def is_remainder(a: int, p: int) -> bool:
+    # is x^2 === a (mod p)
+    for x in range(1, p):
+        if x**2 % p == a % p:
+            return True
+    return False
+
+
+def get_all_semi_prime(n: int) -> int:
     for i in range(2, n):
         if gcd(n, i) == 1:
             yield i
 
 
-def calculate(a, m, n):
-    if m == 1:
-        return a % n
-    elif m % 2 == 0:
-        return calculate((a ** 2) % n, m / 2, n) % n
-    else:
-        return (a * calculate(a % n, m - 1, n)) % n
-
-
-def continued_fraction(a, b):
+def continued_fraction(a: int, b: int) -> List[int]:
     cf = []
     while b > 0:
         cf.append(a // b)
@@ -31,7 +31,7 @@ def continued_fraction(a, b):
     return cf
 
 
-def get_convergent(cf):
+def get_convergent(cf: List[int]) -> List[Tuple[int, int]]:
     cvg = []
     p = [1, cf[0]]
     q = [0, 1]
@@ -43,7 +43,7 @@ def get_convergent(cf):
     return cvg
 
 
-def prime(n):
+def prime(n: int) -> bool:
     if n == 2: return True
     if n == 1: return False
     for i in range(3, int(sqrt(n))):
@@ -52,7 +52,7 @@ def prime(n):
     return True
 
 
-def jacob_symbol(b, n):
+def jacob_symbol(b: int, n: int) -> int:
     b, t = b % n, 1
     while b != 0:
         while b % 2 == 0:
@@ -65,8 +65,8 @@ def jacob_symbol(b, n):
     return 0
 
 
-def euler_pseudoprime(b, n):
-    return (jacob_symbol(b, n) % n) == (calculate(b, (n - 1) // 2, n) % n)
+def euler_pseudoprime(b: int, n: int) -> bool:
+    return (jacob_symbol(b, n) % n) == pow(b, (n - 1) // 2, n)
 
 
 def strong_pseudoprime(b: int, n: int) -> bool:

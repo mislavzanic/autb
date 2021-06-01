@@ -1,17 +1,9 @@
-from math import sqrt
-
-
-def isRemainder(a: int, p: int) -> bool:
-    # is x^2 === a (mod p)
-    for x in range(1, p):
-        if x**2 % p == a % p:
-            return True
-    return False
+from tuil import *
 
 
 def zad1(p: int) -> int:
     for a in range(1, p):
-        if not isRemainder(a, p):
+        if not is_remainder(a, p):
             return a
 
 
