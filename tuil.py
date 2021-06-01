@@ -1,7 +1,8 @@
-from math import sqrt
+from math import sqrt, floor
 
 
 def gcd(a, b):
+    a, b = max(a, b), min(a, b)
     while b > 0:
         a, b = b, a % b
     return a
@@ -66,3 +67,29 @@ def jacob_symbol(b, n):
 
 def euler_pseudoprime(b, n):
     return (jacob_symbol(b, n) % n) == (calculate(b, (n - 1) // 2, n) % n)
+
+
+def strong_pseudoprime(b: int, n: int) -> bool:
+    if n % 4 == 3: return euler_pseudoprime(b, n)
+    s, t = 0, n - 1
+    while t % 2 == 0:
+        t //= 2
+        s += 1
+    if pow(b, t, n) == 1: return True
+    for r in range(1, s):
+        if pow(b, (2**r) * t, n) == -1: return True
+    return False
+
+
+def pollards_roh_method(n: int) -> int:
+    f = lambda x: (x**2 - 1) % n
+    for slow in [2, 3, 4, 6]:
+        steps, i, fast = 2 * floor(sqrt(sqrt(n))), 0, slow
+        while i < steps:
+            slow = f(slow)
+            fast = f(f(fast))
+            p = gcd(fast - slow, n)
+            if p != 1:
+                if p == n: break
+                else: return p
+    return 1
