@@ -49,6 +49,9 @@ def continued_fraction_i(d) -> Tuple[List[int], List[int], List[int]]:
         s.append(a[i] * t[i] - s[i])
         t.append((d - s[i + 1]**2) // t[i])
         alpha.append(((s[i + 1] + sqrt_d) / t[i + 1]))
+        print('a_'+str(i) + '= ' + str(a[i]))
+        print('s_'+str(i) + '= ' + str(s[i]))
+        print('t_'+str(i) + '= ' + str(t[i]))
         i += 1
 
 
@@ -108,8 +111,9 @@ def strong_pseudoprime(b: int, n: int) -> bool:
     if pow(b, t, n) == 1:
         print('(' + str(b) + ' ^ ' + str(t) + ') % ' + str(n) + ' == 1 -- b ^ t % n == 1')
         return True
+    else: print('(' + str(b) + ' ^ ' + str(t) + ') % ' + str(n) + ' == ' + str(pow(b, t, n)) + ' -- b ^ t % n == ' + str(pow(b, t, n)))
     for r in range(1, s+1):
-        print('b ^ ((2 ^ r) * t) % n = ' + str(pow(b, (2 ** r) * t, n)))
+        print('b ^ ((2 ^ r) * t) % n = ' + str(pow(b, (2 ** r) * t, n)) + '; r = ' + str(r))
         if pow(b, (2 ** r) * t, n) == -1: return True
     return False
 
