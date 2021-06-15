@@ -1,9 +1,9 @@
-from tuil import *
+from num_theory import *
 
 
 def zad1():
     n, e, d = 9827933, 17, 3177473
-    m = (e * d - 1) / 2
+    m = (e * d - 1) // 2
     candidates = [a for a in get_all_semi_prime(n)]
     k = 1
     while m % 2 == 0:
@@ -12,7 +12,7 @@ def zad1():
             if b != 1:
                 return a, k, b  # 7, 2, nes
 
-        m = m / 2
+        m = m // 2
         k += 1
 
 
@@ -30,10 +30,8 @@ def zad3():
     b = 48
     n = 3
     while True:
-        if not prime(n) and gcd(max(b, n), min(b, n)) == 1:
-            if pow(b, n - 1, n) == 1 and not euler_pseudoprime(b, n):
-                return n  # 91
-
+        if pseudoprime(b, n) and not euler_pseudoprime(b, n):
+            return n
         n += 2
 
 

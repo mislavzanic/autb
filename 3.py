@@ -1,4 +1,4 @@
-from tuil import *
+from num_theory import *
 
 
 def zad1(p: int) -> int:
